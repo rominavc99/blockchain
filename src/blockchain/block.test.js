@@ -1,48 +1,45 @@
 import Block from './block';
 
-describe ('Block', () => {
+describe('Block', () => {
     let timestamp;
     let previousBlock;
     let data;
     let hash;
 
-    beforeEach(() => {
+    beforeEach( () => {
         timestamp = new Date(2010, 0, 1);
         previousBlock = Block.genesis;
-        data = 'transct0';
-        hash = "hash0";
+        data = 'transaction0';
+        hash = 'hash0';
     });
 
-    it('Crear instancia con parametros', () =>{
+    it('Crear instancia con parametros', () => {
         const block = new Block(timestamp, previousBlock.hash, hash, data);
 
         expect(block.timestamp).toEqual(timestamp);
         expect(block.previousHash).toEqual(previousBlock.hash);
-        expect(block.hash).toEqual(hash);
         expect(block.data).toEqual(data);
-    });
+        expect(block.hash).toEqual(hash);
+    }); 
 
-    it('Usando static mine', () =>{
-        const block = Block.mine( previousBlock, data);
+    it('Usando static mine', ()=> {
+        const block = Block.mine(previousBlock, data);
 
         expect(block.hash.length).toEqual(64);
         expect(block.previousHash).toEqual(previousBlock.hash);
-        expect(block.data).toEqual(data);
+        expect(data).toEqual(data);
     });
 
-    it('Usando static hash', () =>{
-        const block = Block.hash( timestamp, previousBlock, data);
-
+    it('Usando static hash', ()=> {
         hash = Block.hash(timestamp, previousBlock.hash, data);
-        const hasOutput = "87c3cf370c94a4c239f50115ee34b4b66f421d572b7064d60c3809b9d33a3b06";
+        const hasOutput = "332f4bc930745c632d39f9d91b2638b677dad3688a124a13b64922dd8a41a0c6";
 
-    expect(hash).toEqual(hasOutput);
+        expect(hash).toEqual(hasOutput);
     });
 
-    it('Usando toString', () =>{
-        const block = Block.mine( previousBlock, data);
+    it('Usando toString', ()=> {
+        const block = Block.mine(previousBlock.data);
 
         expect(typeof block.toString()).toEqual('string');
-        
     });
 });
